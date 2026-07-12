@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert's Budget Planner — the budget that pays you first (free)</title>
+<meta name="description" content="The NEEDS/WANTS/KEEP budget planner rebuilt for Germany & the EU: monthly plan, one-line tracking, savings rate, 50/30/20 check and emergency-fund runway. Free download for subscribers.">
+<style>
+  :root {
+    --bg: #120d07;
+    --bg-soft: #1a130a;
+    --ink: #f7f2ea;
+    --ink-soft: #b3a58f;
+    --ink-faint: #74674f;
+    --accent: #ffb45c;
+    --accent-soft: rgba(255, 180, 92, 0.14);
+    --accent-line: rgba(255, 180, 92, 0.38);
+    --line: rgba(247, 242, 234, 0.10);
+    --glass: rgba(247, 242, 234, 0.04);
+    --glass-strong: rgba(247, 242, 234, 0.07);
+    --good: #3ddc97;
+    --radius: 20px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(18, 13, 7, 0.72);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); }
+  .btn {
+    display: inline-block; text-decoration: none; cursor: pointer; border: none;
+    font-family: inherit; font-weight: 700; letter-spacing: 0.01em;
+    color: #1d1204; background: linear-gradient(135deg, #ffc98a, #f59a33);
+    border-radius: 12px; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(255, 180, 92, 0.35); }
+  .btn-sm { padding: 9px 18px; font-size: 0.88rem; }
+  .btn-lg { padding: 15px 28px; font-size: 1.02rem; }
+
+  .hero { position: relative; padding: 76px 0 36px; text-align: center; }
+  .hero::before {
+    content: ""; position: absolute; inset: -40% -20% auto; height: 130%;
+    background: radial-gradient(ellipse 60% 50% at 50% 8%, rgba(255,180,92,0.15), transparent 65%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft);
+    border: 1px solid var(--accent-line); border-radius: 999px; padding: 6px 16px; margin-bottom: 26px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5.4vw, 3.7rem); line-height: 1.06; letter-spacing: -0.035em;
+    font-weight: 800; max-width: 800px; margin: 0 auto 20px;
+  }
+  h1 .grad {
+    background: linear-gradient(120deg, #ffc98a, #ffe9cf 60%, #ffc98a);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .sub { font-size: 1.12rem; color: var(--ink-soft); max-width: 600px; margin: 0 auto; }
+
+  /* dashboard mock */
+  .mock-zone { padding: 34px 0 8px; }
+  .mock {
+    max-width: 720px; margin: 0 auto; background: var(--bg-soft);
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5); text-align: left;
+  }
+  .mock-head {
+    display: flex; gap: 8px; align-items: center;
+    background: var(--glass-strong); border-bottom: 1px solid var(--line); padding: 11px 18px;
+    font-size: 0.8rem; color: var(--ink-faint);
+  }
+  .mock-head .tab { padding: 4px 12px; border-radius: 7px; }
+  .mock-head .tab.on { background: var(--accent-soft); color: var(--accent); font-weight: 700; border: 1px solid var(--accent-line); }
+  .mock-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat { background: var(--glass); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .stat .lbl { font-size: 0.76rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 4px; }
+  .stat .val { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stat .val.good { color: var(--good); }
+  .stat .val.acc { color: var(--accent); }
+  .stat .sub { font-size: 0.78rem; color: var(--ink-faint); }
+  .split { grid-column: 1 / -1; background: var(--glass); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .split .row { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 0.82rem; }
+  .split .row .name { flex: 0 0 60px; color: var(--ink-soft); font-weight: 600; }
+  .split .bar { flex: 1; height: 10px; border-radius: 999px; background: rgba(247,242,234,0.08); overflow: hidden; }
+  .split .bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #f59a33, #ffc98a); }
+  .split .pct { flex: 0 0 84px; text-align: right; color: var(--ink-soft); }
+
+  .bridge { text-align: center; padding: 34px 0 10px; }
+  .bridge p { color: var(--ink-soft); font-size: 1.02rem; max-width: 560px; margin: 0 auto 18px; }
+  .bridge p b { color: var(--ink); }
+
+  .signup { max-width: 500px; margin: 0 auto; padding-bottom: 26px; }
+  .signup form { display: flex; gap: 9px; }
+  .signup input[type="email"] {
+    flex: 1; min-width: 0; padding: 14px 16px; font-size: 1rem; font-family: inherit;
+    background: var(--glass-strong); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 12px;
+  }
+  .signup input[type="email"]::placeholder { color: var(--ink-faint); }
+  .signup input[type="email"]:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px rgba(255,180,92,0.15); }
+  .signup .note { font-size: 0.8rem; color: var(--ink-faint); margin-top: 10px; text-align: center; }
+  .download-reveal {
+    display: none; background: var(--accent-soft); border: 1px solid var(--accent-line);
+    border-radius: 14px; padding: 20px; text-align: center;
+  }
+  .download-reveal p { color: var(--ink); font-weight: 600; margin-bottom: 14px; }
+
+  section { padding: 64px 0; }
+  h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); letter-spacing: -0.03em; font-weight: 800; text-align: center; margin-bottom: 12px; }
+  .section-sub { text-align: center; color: var(--ink-soft); max-width: 540px; margin: 0 auto 40px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .card { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; transition: border-color .2s ease, transform .2s ease; }
+  .card:hover { border-color: var(--accent-line); transform: translateY(-2px); }
+  .card .icon {
+    width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; background: var(--accent-soft); border: 1px solid var(--accent-line); margin-bottom: 14px;
+  }
+  .card h3 { font-size: 1.02rem; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .card p { font-size: 0.9rem; color: var(--ink-soft); }
+  .card p b { color: var(--ink); }
+
+  .founder {
+    max-width: 640px; margin: 0 auto; display: flex; gap: 18px; align-items: flex-start;
+    background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; text-align: left;
+  }
+  .founder .avatar {
+    flex: 0 0 54px; height: 54px; border-radius: 50%;
+    background: var(--accent-soft); border: 1px solid var(--accent-line);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.2rem; color: var(--accent);
+  }
+  .founder h3 { font-size: 1.02rem; margin-bottom: 6px; }
+  .founder p { font-size: 0.9rem; color: var(--ink-soft); }
+  .founder p b { color: var(--ink); }
+  .founder a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .founder a:hover { text-decoration: underline; }
+
+  .faq { max-width: 720px; margin: 0 auto; }
+  .faq details { background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 0 20px; margin-bottom: 10px; transition: border-color .2s ease; }
+  .faq details[open] { border-color: var(--accent-line); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.97rem; padding: 16px 0; color: var(--ink); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 1.3rem; font-weight: 400; color: var(--ink-faint); transition: transform .2s ease; }
+  .faq details[open] summary::after { transform: rotate(45deg); color: var(--accent); }
+  .faq .a { padding: 0 0 18px; font-size: 0.9rem; color: var(--ink-soft); }
+  .faq .a b { color: var(--ink); }
+
+  .xlinks { border-top: 1px solid var(--line); padding: 26px 0 6px; text-align: center; font-size: 0.86rem; color: var(--ink-faint); }
+  .xlinks a { color: var(--ink-soft); text-decoration: none; font-weight: 600; margin: 0 10px; }
+  .xlinks a:hover { color: var(--accent); }
+
+  footer { padding: 26px 0 48px; text-align: center; font-size: 0.82rem; color: var(--ink-faint); }
+  footer a { color: var(--ink-faint); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 560px) {
+    .signup form { flex-direction: column; }
+    .hero { padding: 52px 0 26px; }
+    .mock-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">Robert's <span>Budget Planner</span></div>
+    <a class="btn btn-sm" href="#download">Get it free</a>
+  </div>
+</header>
+
+<div class="hero wrap">
+  <div class="eyebrow">Free download · Excel, LibreOffice &amp; Google Sheets</div>
+  <h1>The budget that <span class="grad">pays you first</span>.</h1>
+  <p class="sub">My NEEDS / WANTS / KEEP system, rebuilt for life in Germany &amp; the EU: plan your months in euros, track spending in one line a day, and watch your savings rate — not your guilt — grow.</p>
+</div>
+
+<div class="mock-zone wrap">
+  <div class="mock">
+    <div class="mock-head">
+      <span class="tab">Start Here</span><span class="tab on">Dashboard</span><span class="tab">Planner</span><span class="tab">Tracker</span>
+    </div>
+    <div class="mock-body">
+      <div class="stat">
+        <div class="lbl">Savings rate — March</div>
+        <div class="val good">23&nbsp;%</div>
+        <div class="sub">KEEP ÷ income · paid first</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Emergency fund runway</div>
+        <div class="val acc">4.2 months</div>
+        <div class="sub">aim for 6 — then invest harder</div>
+      </div>
+      <div class="split">
+        <div class="lbl" style="font-size:0.76rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;">Your year vs. 50 / 30 / 20</div>
+        <div class="row"><span class="name">NEEDS</span><span class="bar"><i style="width:54%"></i></span><span class="pct">54&nbsp;% · target 50</span></div>
+        <div class="row"><span class="name">WANTS</span><span class="bar"><i style="width:23%"></i></span><span class="pct">23&nbsp;% · target 30</span></div>
+        <div class="row"><span class="name">KEEP</span><span class="bar"><i style="width:23%"></i></span><span class="pct">23&nbsp;% · target 20</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bridge wrap">
+  <p><b>Free, in exchange for your email.</b> You'll also get my launch mails for the tools I'm building for EU investors — unsubscribe with one click, keep the planner forever.</p>
+  <div class="signup" id="download">
+    <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="product" value="budget-planner">
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+      <button class="btn btn-lg" type="submit">Send me the planner</button>
+    </form>
+    <div class="download-reveal" id="download-reveal">
+      <p>✓ You're in! Grab your planner:</p>
+      <a class="btn btn-lg" href="Roberts_Budget_Planner.xlsx" download>Download Roberts_Budget_Planner.xlsx</a>
+    </div>
+    <p class="note">No spam. The planner + occasional launch mails. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2 class="reveal">What's inside</h2>
+    <p class="section-sub reveal">Four sheets. No macros, no fluff — opens in Excel, LibreOffice and Google Sheets.</p>
+    <div class="grid">
+      <div class="card reveal">
+        <div class="icon">🗺</div>
+        <h3>Planner</h3>
+        <p>Plan all 12 months across <b>INCOME, NEEDS, WANTS and KEEP</b> — with EU-ready categories like Rent &amp; Nebenkosten, health insurance, broadcast fee and the Deutschlandticket. A "left to allocate" row shows when every euro has a job.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">✍️</div>
+        <h3>Tracker</h3>
+        <p>One line per expense: date, type (dropdown), category, amount. That's the whole habit — <b>everything else calculates itself</b>.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">📊</div>
+        <h3>Dashboard</h3>
+        <p>Plan vs. actual per month, your <b>savings rate</b>, your year against the <b>50/30/20 rule</b>, and how many months your <b>emergency fund</b> covers.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🇪🇺</div>
+        <h3>Built for the EU</h3>
+        <p>Euro formatting, German cost realities, and a KEEP section that treats <b>ETF savings plans and pension contributions as bills you pay yourself first</b> — the accountant's way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 0;">
+  <div class="wrap">
+    <h2 class="reveal">Who's behind this?</h2>
+    <div class="founder reveal" style="margin-top: 28px;">
+      <div class="avatar">R</div>
+      <div>
+        <h3>Hi, I'm Robert Alibegovic — a Chartered Accountant</h3>
+        <p>13+ years in finance across Germany, New Zealand and the Gulf — Big 4 audit, bank risk, finance director roles. I've budgeted my life in <b>three currencies and three cost-of-living realities</b>, and this NEEDS/WANTS/KEEP file is the one system that survived all of them. It's what I actually use every month, rebuilt so it works for you too. <b>Questions? I answer every email personally.</b></p>
+        <p style="margin-top:10px;"><a href="https://www.tiktok.com/@robertpersonalfinance" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@robertpersonalfinance" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.instagram.com/robertpersonalfinance/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/in/robertalibegovic" target="_blank" rel="noopener">LinkedIn</a></p>
+        <!-- X link pending — copy the <a> pattern above when Robert confirms the handle -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 0;">
+  <div class="wrap">
+    <h2 class="reveal">Frequently asked questions</h2>
+    <div class="faq reveal" style="margin-top: 28px;">
+      <details>
+        <summary>Is it really free?</summary>
+        <div class="a">Yes. You get the full planner, forever, including future versions. The "price" is your email address — that's how I let you know when I ship new tools for EU investors. <b>One-click unsubscribe</b>, and you keep the file.</div>
+      </details>
+      <details>
+        <summary>Excel, Google Sheets or LibreOffice?</summary>
+        <div class="a">All three. The planner uses only standard formulas (SUMIFS — <b>no macros, no array magic</b>), so it opens cleanly everywhere. For Google Sheets: upload the file to Drive and open with Sheets.</div>
+      </details>
+      <details>
+        <summary>What is NEEDS / WANTS / KEEP?</summary>
+        <div class="a">Every euro gets one of three jobs: <b>NEEDS</b> (must pay: rent, groceries, insurance), <b>WANTS</b> (choose to pay: travel, eating out) and <b>KEEP</b> (pay yourself: emergency fund, ETF savings plan, pension). The classic 50/30/20 rule is the compass; the dashboard shows where you actually stand.</div>
+      </details>
+      <details>
+        <summary>I don't live in Germany — does it still work?</summary>
+        <div class="a">Absolutely. The German categories (Nebenkosten, broadcast fee, Deutschlandticket) are just pre-filled rows — <b>rename any of them</b> and the maths doesn't change. The system is universal.</div>
+      </details>
+      <details>
+        <summary>What happens to my email?</summary>
+        <div class="a">It goes on my list, GDPR-compliant, and is <b>never sold or shared</b>. You'll get the planner and occasional mails about tools I'm building (like the Depot-Check below). Unsubscribe = one click.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="wrap xlinks reveal">
+  More tools by Robert:
+  <a href="depot-check.html">Depot‑Check — portfolio second opinion</a> ·
+  <a href="depot-radar.html">Depot‑Radar — your portfolio's week in one mail</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Robert's Budget Planner · <a href="#">Imprint</a> · <a href="#">Privacy</a></p>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('waitlist-form');
+  const reveal = document.getElementById('download-reveal');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = 'One moment …';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('send failed');
+    } catch {
+      /* Even if no form endpoint is configured yet, don't hold the download hostage —
+         goodwill converts better than a broken gate. */
+    }
+    form.style.display = 'none';
+    reveal.style.display = 'block';
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

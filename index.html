@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Personal Finance — free tools for investors in Germany & the EU</title>
+<meta name="description" content="Free budget planner, a live portfolio-overlap demo and a calm weekly portfolio mail — built by Robert Alibegovic, Chartered Accountant. For English speakers investing in Germany & the EU.">
+<style>
+  :root {
+    --bg: #0a0e12; --ink: #eef2f6; --ink-soft: #9aa8b5; --ink-faint: #5c6b79;
+    --line: rgba(238,242,246,0.10); --glass: rgba(238,242,246,0.04); --glass-strong: rgba(238,242,246,0.07);
+    --amber: #ffb45c; --green: #2fe4a7; --blue: #7d96ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+  }
+  .card-stack { width: 100%; max-width: 560px; text-align: center; }
+  .avatar {
+    width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(47,228,167,0.25), rgba(125,150,255,0.25));
+    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; font-weight: 800; color: var(--ink);
+  }
+  h1 { font-size: 1.5rem; letter-spacing: -0.02em; }
+  .bio { color: var(--ink-soft); font-size: 0.94rem; max-width: 440px; margin: 8px auto 28px; }
+  .bio b { color: var(--ink); }
+
+  a.tool {
+    display: block; text-decoration: none; color: var(--ink); text-align: left;
+    background: var(--glass); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px 20px; margin-bottom: 12px; transition: transform .15s ease, border-color .15s ease;
+    position: relative;
+  }
+  a.tool:hover { transform: translateY(-2px); }
+  a.tool .tag {
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+    border-radius: 999px; padding: 3px 10px; display: inline-block; margin-bottom: 6px;
+  }
+  a.tool h2 { font-size: 1.05rem; letter-spacing: -0.01em; }
+  a.tool p { font-size: 0.86rem; color: var(--ink-soft); margin-top: 2px; }
+  a.tool .arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); font-size: 1.2rem; }
+  a.tool:hover .arrow { color: var(--ink); }
+
+  a.tool.planner { border-color: rgba(255,180,92,0.4); background: linear-gradient(180deg, rgba(255,180,92,0.09), var(--glass) 70%); }
+  a.tool.planner .tag { background: rgba(255,180,92,0.15); color: var(--amber); border: 1px solid rgba(255,180,92,0.4); }
+  a.tool.check .tag { background: rgba(47,228,167,0.12); color: var(--green); border: 1px solid rgba(47,228,167,0.35); }
+  a.tool.check:hover { border-color: rgba(47,228,167,0.4); }
+  a.tool.radar .tag { background: rgba(125,150,255,0.12); color: var(--blue); border: 1px solid rgba(125,150,255,0.4); }
+  a.tool.radar:hover { border-color: rgba(125,150,255,0.45); }
+
+  .socials { margin-top: 24px; font-size: 0.88rem; color: var(--ink-faint); }
+  .socials a { color: var(--ink-soft); text-decoration: none; font-weight: 600; margin: 0 8px; }
+  .socials a:hover { color: var(--ink); }
+  footer { margin-top: 22px; font-size: 0.76rem; color: var(--ink-faint); }
+  footer a { color: var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<div class="card-stack">
+  <div class="avatar">R</div>
+  <h1>Robert Personal Finance</h1>
+  <p class="bio"><b>Chartered Accountant (ACCA)</b> · 13+ years in finance across Germany, New Zealand &amp; the Gulf. Free tools for English speakers investing in Germany &amp; the EU.</p>
+
+  <a class="tool planner" href="budget-planner.html">
+    <span class="tag">Free download</span>
+    <h2>Robert's Budget Planner</h2>
+    <p>The NEEDS / WANTS / KEEP spreadsheet I use myself — savings rate, 50/30/20 check, emergency-fund runway.</p>
+    <span class="arrow">→</span>
+  </a>
+
+  <a class="tool check" href="depot-check.html">
+    <span class="tag">Live demo</span>
+    <h2>Depot‑Check</h2>
+    <p>Tap what you own, see what's hiding twice in your portfolio — overlaps, fees, US concentration.</p>
+    <span class="arrow">→</span>
+  </a>
+
+  <a class="tool radar" href="depot-radar.html">
+    <span class="tag">Live demo</span>
+    <h2>Depot‑Radar</h2>
+    <p>Your portfolio's week in one calm email — build your personal sample mail in 10 seconds.</p>
+    <span class="arrow">→</span>
+  </a>
+
+  <div class="socials">
+    <a href="https://www.tiktok.com/@robertpersonalfinance" target="_blank" rel="noopener">TikTok</a> ·
+    <a href="https://www.youtube.com/@robertpersonalfinance" target="_blank" rel="noopener">YouTube</a> ·
+    <a href="https://www.instagram.com/robertpersonalfinance/" target="_blank" rel="noopener">Instagram</a> ·
+    <a href="https://www.linkedin.com/in/robertalibegovic" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+
+  <footer>© 2026 Robert Personal Finance · <a href="#">Imprint</a> · <a href="#">Privacy</a> · No investment advice — education only.</footer>
+</div>
+
+</body>
+</html>
