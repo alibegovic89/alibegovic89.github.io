@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Robert's Budget Planner — the budget that pays you first (free)</title>
 <meta name="description" content="The NEEDS/WANTS/KEEP budget planner rebuilt for Germany & the EU: monthly plan, one-line tracking, savings rate, 50/30/20 check and emergency-fund runway. Free download for subscribers.">
+<meta property="og:title" content="Robert's Budget Planner — the budget that pays you first (free)">
+<meta property="og:description" content="The NEEDS/WANTS/KEEP budget planner rebuilt for Germany & the EU: monthly plan, one-line tracking, savings rate, 50/30/20 check and emergency-fund runway. Free download for subscribers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alibegovic89.github.io/budget-planner.html">
+<meta property="og:image" content="https://alibegovic89.github.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
 <style>
   :root {
     --bg: #120d07;
@@ -140,7 +147,7 @@
     background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; text-align: left;
   }
   .founder .avatar {
-    flex: 0 0 54px; height: 54px; border-radius: 50%;
+    flex: 0 0 54px; width: 54px; height: 54px; border-radius: 50%; object-fit: cover;
     background: var(--accent-soft); border: 1px solid var(--accent-line);
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 1.2rem; color: var(--accent);
@@ -227,10 +234,10 @@
 <div class="bridge wrap">
   <p><b>Free, in exchange for your email.</b> You'll also get my launch mails for the tools I'm building for EU investors — unsubscribe with one click, keep the planner forever.</p>
   <div class="signup" id="download">
-    <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form id="waitlist-form" action="https://formspree.io/f/xvzepjkq" method="POST">
       <input type="hidden" name="product" value="budget-planner">
       <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
-      <button class="btn btn-lg" type="submit">Send me the planner</button>
+      <button class="btn btn-lg" type="submit">Get the free planner</button>
     </form>
     <div class="download-reveal" id="download-reveal">
       <p>✓ You're in! Grab your planner:</p>
@@ -273,12 +280,11 @@
   <div class="wrap">
     <h2 class="reveal">Who's behind this?</h2>
     <div class="founder reveal" style="margin-top: 28px;">
-      <div class="avatar">R</div>
+      <img class="avatar" src="robert.jpg" alt="Robert Alibegovic">
       <div>
         <h3>Hi, I'm Robert Alibegovic — a Chartered Accountant</h3>
         <p>13+ years in finance across Germany, New Zealand and the Gulf — Big 4 audit, bank risk, finance director roles. I've budgeted my life in <b>three currencies and three cost-of-living realities</b>, and this NEEDS/WANTS/KEEP file is the one system that survived all of them. It's what I actually use every month, rebuilt so it works for you too. <b>Questions? I answer every email personally.</b></p>
         <p style="margin-top:10px;"><a href="https://www.tiktok.com/@robertpersonalfinance" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@robertpersonalfinance" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.instagram.com/robertpersonalfinance/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/in/robertalibegovic" target="_blank" rel="noopener">LinkedIn</a></p>
-        <!-- X link pending — copy the <a> pattern above when Robert confirms the handle -->
 
       </div>
     </div>
@@ -321,7 +327,7 @@
 
 <footer>
   <div class="wrap">
-    <p>© 2026 Robert's Budget Planner · <a href="#">Imprint</a> · <a href="#">Privacy</a></p>
+    <p>© 2026 Robert's Budget Planner · <a href="legal.html#imprint">Imprint</a> · <a href="legal.html#privacy">Privacy</a></p>
   </div>
 </footer>
 
@@ -354,5 +360,7 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 
+<script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

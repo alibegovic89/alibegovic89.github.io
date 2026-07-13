@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Depot-Radar — Your portfolio's week, in one calm email</title>
 <meta name="description" content="Pick your holdings and instantly see your personal weekly mail: only the events that affect your portfolio — earnings, dividends, index changes — each explained calmly in 3 sentences. Built for EU investors.">
+<meta property="og:title" content="Depot-Radar — Your portfolio's week, in one calm email">
+<meta property="og:description" content="Pick your holdings and instantly see your personal weekly mail: only the events that affect your portfolio — earnings, dividends, index changes — each explained calmly in 3 sentences. Built for EU investors.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alibegovic89.github.io/depot-radar.html">
+<meta property="og:image" content="https://alibegovic89.github.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
 <style>
   :root {
     --bg: #090b14;
@@ -199,7 +206,7 @@
     text-align: left;
   }
   .founder .avatar {
-    flex: 0 0 54px; height: 54px; border-radius: 50%;
+    flex: 0 0 54px; width: 54px; height: 54px; border-radius: 50%; object-fit: cover;
     background: var(--accent-soft); border: 1px solid var(--accent-line);
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 1.2rem; color: var(--accent-bright);
@@ -293,11 +300,13 @@
 <div class="bridge wrap">
   <p>Like what you see? <b>Depot‑Radar</b> builds exactly this mail every week for your real portfolio — earnings, dividends and upcoming dates, each event explained in 3 sentences.</p>
   <div class="signup" id="waitlist">
-    <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form id="waitlist-form" action="https://formspree.io/f/xvzepjkq" method="POST">
+      <input type="hidden" name="product" value="depot-radar">
       <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
       <button class="btn btn-lg" type="submit">Get early access</button>
     </form>
     <div class="success" id="success-msg">✓ You're on the list! We'll email you at launch — early birds pay half price for the first year.</div>
+    <div id="form-err" style="display:none; color:#ff7b7b; font-size:0.85rem; margin-top:10px; text-align:center;">That didn’t go through — please try again in a moment.</div>
     <p class="note">No spam. One launch email + your 50&nbsp;% early-bird discount. Unsubscribe anytime.</p>
   </div>
 </div>
@@ -384,12 +393,11 @@
   <div class="wrap">
     <h2 class="reveal">Who's behind this?</h2>
     <div class="founder reveal" style="margin-top: 28px;">
-      <div class="avatar">R</div>
+      <img class="avatar" src="robert.jpg" alt="Robert Alibegovic">
       <div>
         <h3>Hi, I'm Robert Alibegovic — an accountant, not a news portal</h3>
         <p>13+ years in finance across Germany, New Zealand and the Gulf — Big 4 audit, bank risk leadership, finance director roles. Qualified as a <b>Chartered Accountant (ACCA), Chartered Banker (AU) and Financial Advisor (NZ)</b>. After rebuilding my portfolio the European way, I found myself spending an hour every Sunday filtering financial news for the three stories that actually affected it. Depot‑Radar is the mail I want to read myself: calm, specific, no clickbait, built for EU portfolios. <b>I answer every support email personally, within 24 hours.</b></p>
         <p style="margin-top:10px;"><a href="https://www.tiktok.com/@robertpersonalfinance" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@robertpersonalfinance" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.instagram.com/robertpersonalfinance/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/in/robertalibegovic" target="_blank" rel="noopener">LinkedIn</a></p>
-        <!-- X link pending — copy the <a> pattern above when Robert confirms the handle -->
 
       </div>
     </div>
@@ -444,7 +452,7 @@
 
 <footer style="border-top: none;">
   <div class="wrap">
-    <p>© 2026 Depot‑Radar · <a href="#">Imprint</a> · <a href="#">Privacy</a></p>
+    <p>© 2026 Depot‑Radar · <a href="legal.html#imprint">Imprint</a> · <a href="legal.html#privacy">Privacy</a></p>
   </div>
 </footer>
 
@@ -541,10 +549,9 @@
       form.style.display = 'none';
       success.style.display = 'block';
     } catch {
-      // Fallback while no form endpoint is configured
-      window.location.href = 'mailto:hello@depot-radar.example?subject=Depot-Radar%20waitlist&body=Please%20add%20me%20to%20the%20waitlist:%20' + encodeURIComponent(form.email.value);
+      document.getElementById('form-err').style.display = 'block';
       btn.disabled = false;
-      btn.textContent = 'Get early access';
+      btn.textContent = 'Try again';
     }
   });
 
@@ -555,5 +562,7 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 
+<script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
