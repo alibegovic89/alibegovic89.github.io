@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retirement Calculator (€) — what your ETF savings plan really builds</title>
+<meta name="description" content="Free EU retirement calculator: see what your monthly ETF savings grow into by retirement — in today's purchasing power, not fantasy numbers. By Robert Alibegovic, Chartered Accountant.">
+<meta property="og:title" content="Retirement Calculator (€) — what your ETF savings plan really builds">
+<meta property="og:description" content="See what your monthly ETF savings grow into by retirement — in today's purchasing power, not fantasy numbers. Free, no signup.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alibegovic89.github.io/retirement-calculator.html">
+<meta property="og:image" content="https://alibegovic89.github.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  :root {
+    --bg: #0c0e14; --bg-soft: #12141d; --ink: #eef0f8; --ink-soft: #9aa2bd; --ink-faint: #5d6484;
+    --accent: #4dd0e1; --accent-soft: rgba(77,208,225,0.13); --accent-line: rgba(77,208,225,0.38);
+    --line: rgba(238,240,248,0.10); --glass: rgba(238,240,248,0.04); --glass-strong: rgba(238,240,248,0.07);
+    --good: #3ddc97; --warn: #ffb45c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    padding: 40px 20px 60px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-soft); border: 1px solid var(--accent-line);
+    border-radius: 999px; padding: 5px 14px; margin-bottom: 18px;
+  }
+  h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 10px; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--ink-soft); max-width: 620px; margin-bottom: 30px; }
+
+  .calc { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 760px) { .calc { grid-template-columns: 1fr; } }
+  .panel { background: var(--glass); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+  label { display: block; font-size: 0.8rem; color: var(--ink-soft); margin: 14px 0 5px; }
+  label:first-child { margin-top: 0; }
+  label b { color: var(--ink); }
+  input[type="number"] {
+    width: 100%; padding: 10px 13px; font-size: 1rem; font-family: inherit;
+    background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+  }
+  input[type="number"]:focus { outline: none; border-color: var(--accent-line); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin-top: 4px; }
+  .range-val { font-size: 0.85rem; color: var(--accent); font-weight: 700; }
+
+  .stat { background: var(--glass-strong); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+  .stat .lbl { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
+  .stat .val { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.03em; }
+  .stat .val.hero { color: var(--accent); font-size: 2.4rem; }
+  .stat .note { font-size: 0.8rem; color: var(--ink-soft); }
+  .insight {
+    border-left: 3px solid var(--good); background: rgba(61,220,151,0.08);
+    border-radius: 10px; padding: 12px 16px; font-size: 0.92rem; margin-top: 4px;
+  }
+  .insight b { color: var(--good); }
+
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 110px; margin-top: 16px; }
+  .bars .bar { flex: 1; background: linear-gradient(180deg, var(--accent), rgba(77,208,225,0.25)); border-radius: 5px 5px 0 0; min-height: 4px; position: relative; }
+  .bars .bar .y { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 0.66rem; color: var(--ink-faint); }
+  .bars-note { font-size: 0.74rem; color: var(--ink-faint); margin-top: 26px; }
+
+  .cta {
+    margin-top: 26px; background: var(--glass); border: 1px solid var(--accent-line); border-radius: 16px;
+    padding: 20px 22px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .cta img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  .cta p { flex: 1; min-width: 220px; font-size: 0.92rem; color: var(--ink-soft); }
+  .cta p b { color: var(--ink); }
+  .cta a {
+    display: inline-block; text-decoration: none; font-weight: 700; color: #06222a;
+    background: linear-gradient(135deg, #7ee3f0, #2bb8cc); border-radius: 11px; padding: 11px 20px; font-size: 0.92rem;
+  }
+  .fine { font-size: 0.78rem; color: var(--ink-faint); margin-top: 24px; }
+  footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-faint); text-align: center; }
+  footer a { color: var(--ink-soft); text-decoration: none; font-weight: 600; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Free calculator · no signup · € / EU</div>
+  <h1>What will your ETF savings plan <span>actually</span> be worth?</h1>
+  <p class="sub">Most calculators show you a fantasy number. This one also shows it in <b>today's purchasing power</b> — what that money will actually buy when you retire.</p>
+
+  <div class="calc">
+    <div class="panel">
+      <label>Your age today</label>
+      <input type="number" id="age" value="35" min="16" max="80">
+      <label>Retirement age</label>
+      <input type="number" id="retire" value="67" min="40" max="80">
+      <label>Already invested (€)</label>
+      <input type="number" id="start" value="20000" min="0" step="1000">
+      <label>Monthly savings plan (€)</label>
+      <input type="number" id="monthly" value="400" min="0" step="50">
+      <label>Expected return p.a. <span class="range-val" id="rv">6.0 %</span></label>
+      <input type="range" id="ret" min="2" max="10" step="0.5" value="6">
+      <label>Inflation p.a. <span class="range-val" id="iv">2.0 %</span></label>
+      <input type="range" id="inf" min="0" max="5" step="0.5" value="2">
+    </div>
+
+    <div class="panel">
+      <div class="stat">
+        <div class="lbl">Portfolio at retirement (nominal)</div>
+        <div class="val" id="fv">—</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">In today's purchasing power</div>
+        <div class="val hero" id="fvReal">—</div>
+        <div class="note">this is the honest number</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Sustainable monthly income (4 % rule, today's money)</div>
+        <div class="val" id="income">—</div>
+        <div class="note">a rule of thumb, not a guarantee</div>
+      </div>
+      <div class="insight" id="delta"></div>
+      <div class="bars" id="bars"></div>
+      <div class="bars-note">Projected growth (today's purchasing power) — your money at each age.</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <img src="robert.jpg" alt="Robert Alibegovic">
+    <p><b>Where does the €400 a month come from?</b> My free NEEDS/WANTS/KEEP budget planner finds it — the same file I use to pay my own savings plan first.</p>
+    <a href="budget-planner.html">Get the free planner</a>
+  </div>
+
+  <p class="fine">Assumptions: monthly compounding, contributions at month-end, constant return and inflation, no taxes or fund costs (returns are before tax — in Germany remember the Vorabpauschale and capital-gains tax reduce net results). This calculator is financial education, not investment advice (WpHG). Past returns don't guarantee future results.</p>
+
+  <footer>
+    <a href="index.html">← All tools by Robert</a> · <a href="emergency-fund-calculator.html">Emergency-fund calculator</a> · <a href="legal.html#imprint">Imprint</a> · <a href="legal.html#privacy">Privacy</a>
+  </footer>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const eur = (v) => '€' + Math.round(v).toLocaleString('en-IE');
+
+  function calc() {
+    const age = +$('age').value || 0;
+    const retire = +$('retire').value || 0;
+    const start = +$('start').value || 0;
+    const pmt = +$('monthly').value || 0;
+    const r = +$('ret').value / 100;
+    const infl = +$('inf').value / 100;
+    $('rv').textContent = (+$('ret').value).toFixed(1) + ' %';
+    $('iv').textContent = (+$('inf').value).toFixed(1) + ' %';
+
+    const years = Math.max(0, retire - age);
+    const n = years * 12, mr = r / 12;
+
+    const fvOf = (extra) => {
+      const g = Math.pow(1 + mr, n);
+      return start * g + (pmt + extra) * (mr > 0 ? (g - 1) / mr : n);
+    };
+    const fv = fvOf(0);
+    const deflate = Math.pow(1 + infl, years);
+    const fvReal = fv / deflate;
+
+    $('fv').textContent = eur(fv);
+    $('fvReal').textContent = eur(fvReal);
+    $('income').textContent = eur((fvReal * 0.04) / 12) + ' / month';
+
+    const extraReal = (fvOf(100) - fv) / deflate;
+    $('delta').innerHTML = years > 0
+      ? `Saving <b>€100 more per month</b> would add <b>${eur(extraReal)}</b> in today's money by ${retire}.`
+      : 'Set a retirement age above your current age to project.';
+
+    // growth bars per ~5y step (real value)
+    const bars = $('bars');
+    bars.innerHTML = '';
+    if (years > 0) {
+      const steps = Math.min(8, Math.max(2, Math.ceil(years / 5)));
+      let maxV = fvReal;
+      const vals = [];
+      for (let s = 1; s <= steps; s++) {
+        const yy = Math.round((years * s) / steps);
+        const nn = yy * 12, gg = Math.pow(1 + mr, nn);
+        const v = (start * gg + pmt * (mr > 0 ? (gg - 1) / mr : nn)) / Math.pow(1 + infl, yy);
+        vals.push([age + yy, v]);
+        maxV = Math.max(maxV, v);
+      }
+      for (const [yy, v] of vals) {
+        const b = document.createElement('div');
+        b.className = 'bar';
+        b.style.height = Math.max(4, (v / maxV) * 100) + '%';
+        b.title = eur(v);
+        b.innerHTML = `<span class="y">${yy}</span>`;
+        bars.appendChild(b);
+      }
+    }
+  }
+  document.querySelectorAll('input').forEach((i) => i.addEventListener('input', calc));
+  calc();
+</script>
+<script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

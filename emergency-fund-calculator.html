@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Fund Calculator (€) — how many months could you survive?</title>
+<meta name="description" content="Free emergency-fund calculator: your runway in months, the gap to a safe cushion, and how long it takes to close it. By Robert Alibegovic, Chartered Accountant.">
+<meta property="og:title" content="Emergency Fund Calculator (€) — how many months could you survive?">
+<meta property="og:description" content="Your runway in months, the gap to a safe cushion, and how long it takes to close it. Free, no signup.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alibegovic89.github.io/emergency-fund-calculator.html">
+<meta property="og:image" content="https://alibegovic89.github.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  :root {
+    --bg: #100d0c; --bg-soft: #171210; --ink: #f6f0ec; --ink-soft: #b3a396; --ink-faint: #75655a;
+    --accent: #ff9d6c; --accent-soft: rgba(255,157,108,0.13); --accent-line: rgba(255,157,108,0.38);
+    --line: rgba(246,240,236,0.10); --glass: rgba(246,240,236,0.04); --glass-strong: rgba(246,240,236,0.07);
+    --good: #3ddc97; --warn: #ffb45c; --bad: #ff7b7b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    padding: 40px 20px 60px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-soft); border: 1px solid var(--accent-line);
+    border-radius: 999px; padding: 5px 14px; margin-bottom: 18px;
+  }
+  h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 10px; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--ink-soft); max-width: 620px; margin-bottom: 30px; }
+
+  .calc { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 760px) { .calc { grid-template-columns: 1fr; } }
+  .panel { background: var(--glass); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+  label { display: block; font-size: 0.8rem; color: var(--ink-soft); margin: 14px 0 5px; }
+  label:first-child { margin-top: 0; }
+  input[type="number"] {
+    width: 100%; padding: 10px 13px; font-size: 1rem; font-family: inherit;
+    background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+  }
+  input[type="number"]:focus { outline: none; border-color: var(--accent-line); }
+  .seg { display: flex; gap: 6px; }
+  .seg button {
+    flex: 1; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    background: var(--glass-strong); color: var(--ink-soft); border: 1px solid var(--line);
+    border-radius: 10px; padding: 9px 0;
+  }
+  .seg button.on { background: var(--accent); color: #221207; border-color: var(--accent); }
+
+  .stat { background: var(--glass-strong); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+  .stat .lbl { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
+  .stat .val { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
+  .stat .val.ok { color: var(--good); }
+  .stat .val.mid { color: var(--warn); }
+  .stat .val.low { color: var(--bad); }
+  .stat .note { font-size: 0.82rem; color: var(--ink-soft); }
+
+  .runway { height: 16px; border-radius: 999px; background: rgba(246,240,236,0.08); overflow: hidden; position: relative; margin: 10px 0 6px; }
+  .runway i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--bad), var(--warn) 45%, var(--good) 75%); transition: width .5s cubic-bezier(.2,.8,.2,1); }
+  .runway-marks { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--ink-faint); margin-bottom: 14px; }
+
+  .verdict { border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 0.92rem; margin-top: 4px; }
+  .verdict b { color: var(--accent); }
+
+  .cta {
+    margin-top: 26px; background: var(--glass); border: 1px solid var(--accent-line); border-radius: 16px;
+    padding: 20px 22px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .cta img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  .cta p { flex: 1; min-width: 220px; font-size: 0.92rem; color: var(--ink-soft); }
+  .cta p b { color: var(--ink); }
+  .cta a {
+    display: inline-block; text-decoration: none; font-weight: 700; color: #221207;
+    background: linear-gradient(135deg, #ffc49e, #f2854a); border-radius: 11px; padding: 11px 20px; font-size: 0.92rem;
+  }
+  .fine { font-size: 0.78rem; color: var(--ink-faint); margin-top: 24px; }
+  footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-faint); text-align: center; }
+  footer a { color: var(--ink-soft); text-decoration: none; font-weight: 600; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Free calculator · no signup · € / EU</div>
+  <h1>If your income stopped today — <span>how long would you last?</span></h1>
+  <p class="sub">Your emergency fund is your runway. Know it in months, see the gap to a safe cushion, and how fast you can close it.</p>
+
+  <div class="calc">
+    <div class="panel">
+      <label>Essential monthly expenses (€) — rent, groceries, insurance, transport</label>
+      <input type="number" id="exp" value="2200" min="1" step="100">
+      <label>Current emergency fund (€) — instant-access savings only</label>
+      <input type="number" id="fund" value="5000" min="0" step="500">
+      <label>Your target cushion</label>
+      <div class="seg" id="seg">
+        <button data-m="3">3 months</button>
+        <button data-m="6" class="on">6 months</button>
+        <button data-m="9">9 months</button>
+      </div>
+      <label>Monthly saving towards the fund (€)</label>
+      <input type="number" id="save" value="300" min="0" step="50">
+    </div>
+
+    <div class="panel">
+      <div class="stat">
+        <div class="lbl">Your runway today</div>
+        <div class="val" id="months">—</div>
+        <div class="runway"><i id="fill"></i></div>
+        <div class="runway-marks"><span>0</span><span>3 mo</span><span id="targetMark">6 mo</span></div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Gap to your target</div>
+        <div class="val" id="gap">—</div>
+        <div class="note" id="gapNote"></div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <img src="robert.jpg" alt="Robert Alibegovic">
+    <p><b>The fund gets built in the KEEP column.</b> My free budget planner treats your emergency fund as a bill you pay yourself first — and shows your runway on its dashboard every month.</p>
+    <a href="budget-planner.html">Get the free planner</a>
+  </div>
+
+  <p class="fine">Rule of thumb: 3 months if your job is very secure and you have no dependants; 6 for most people; 9+ for freelancers, single earners with kids, or probation periods. Keep it instant-access (Tagesgeld), not invested. This calculator is financial education, not investment advice (WpHG).</p>
+
+  <footer>
+    <a href="index.html">← All tools by Robert</a> · <a href="retirement-calculator.html">Retirement calculator</a> · <a href="legal.html#imprint">Imprint</a> · <a href="legal.html#privacy">Privacy</a>
+  </footer>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const eur = (v) => '€' + Math.round(v).toLocaleString('en-IE');
+  let target = 6;
+
+  document.querySelectorAll('#seg button').forEach((b) => {
+    b.onclick = () => {
+      document.querySelectorAll('#seg button').forEach((x) => x.classList.remove('on'));
+      b.classList.add('on');
+      target = +b.dataset.m;
+      calc();
+    };
+  });
+
+  function calc() {
+    const exp = +$('exp').value || 0;
+    const fund = +$('fund').value || 0;
+    const save = +$('save').value || 0;
+
+    const months = exp > 0 ? fund / exp : 0;
+    const m = $('months');
+    m.textContent = months.toFixed(1) + ' months';
+    m.className = 'val ' + (months >= target ? 'ok' : months >= target / 2 ? 'mid' : 'low');
+
+    $('fill').style.width = Math.min(100, (months / target) * 100) + '%';
+    $('targetMark').textContent = target + ' mo';
+
+    const gapEur = Math.max(0, target * exp - fund);
+    $('gap').textContent = gapEur > 0 ? eur(gapEur) : '€0 ✓';
+    $('gapNote').textContent = gapEur > 0
+      ? (save > 0 ? `≈ ${Math.ceil(gapEur / save)} months to close at ${eur(save)}/month` : 'set a monthly saving amount to see how long it takes')
+      : 'target reached — anything above this can work harder elsewhere';
+
+    const v = $('verdict');
+    if (months >= target) {
+      v.innerHTML = `<b>Solid.</b> Your cushion covers your target of ${target} months. Money beyond this earns more invested than parked — that's where an ETF savings plan takes over.`;
+    } else if (months >= target / 2) {
+      v.innerHTML = `<b>Getting there.</b> You're past halfway. Keep the automatic transfer running — the fund comes before investing harder.`;
+    } else {
+      v.innerHTML = `<b>Build this first.</b> Under ${(target / 2).toFixed(0)} months of runway, one broken laptop plus one dental bill can force you to sell investments at the worst moment. Cushion first, then invest.`;
+    }
+  }
+  document.querySelectorAll('input').forEach((i) => i.addEventListener('input', calc));
+  calc();
+</script>
+<script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
