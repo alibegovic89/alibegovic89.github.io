@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Robert Personal Finance — free tools for investors in Germany & the EU</title>
-<meta name="description" content="Free budget planner, a live portfolio-overlap demo and a calm weekly portfolio mail — built by Robert Alibegovic, Chartered Accountant. For English speakers investing in Germany & the EU.">
+<meta name="description" content="Free budget planner, live portfolio demos, retirement & emergency-fund calculators, and a German finance & tax quiz — by Robert Alibegovic, Chartered Accountant. For English speakers investing in Germany & the EU.">
 <meta property="og:title" content="Robert Personal Finance — free tools for investors in Germany & the EU">
-<meta property="og:description" content="Free budget planner, a live portfolio-overlap demo and a calm weekly portfolio mail — built by Robert Alibegovic, Chartered Accountant. For English speakers investing in Germany & the EU.">
+<meta property="og:description" content="Free budget planner, live portfolio demos, calculators, and a German finance & tax quiz. For English speakers investing in Germany & the EU.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://alibegovic89.github.io/">
-<meta property="og:image" content="https://alibegovic89.github.io/og-card.png">
+<meta property="og:url" content="https://robertpersonalfinance.com/">
+<meta property="og:image" content="https://robertpersonalfinance.com/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://robertpersonalfinance.com/">
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
   :root {
     --bg: #0a0e12; --ink: #eef2f6; --ink-soft: #9aa8b5; --ink-faint: #5c6b79;
     --line: rgba(238,242,246,0.10); --glass: rgba(238,242,246,0.04); --glass-strong: rgba(238,242,246,0.07);
     --amber: #ffb45c; --green: #2fe4a7; --blue: #7d96ff;
+    --de-red: #ff5b5b; --de-gold: #ffce4d;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased;
-    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+    padding: 40px 20px 60px;
   }
-  .card-stack { width: 100%; max-width: 560px; text-align: center; }
+  .wrap { width: 100%; max-width: 560px; margin: 0 auto; text-align: center; }
   .avatar {
     width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover;
-    background: linear-gradient(135deg, rgba(47,228,167,0.25), rgba(125,150,255,0.25));
-    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
-    font-size: 1.7rem; font-weight: 800; color: var(--ink);
+    border: 1px solid var(--line); display: block;
   }
   h1 { font-size: 1.5rem; letter-spacing: -0.02em; }
   .bio { color: var(--ink-soft); font-size: 0.94rem; max-width: 440px; margin: 8px auto 28px; }
@@ -50,7 +50,6 @@
   a.tool p { font-size: 0.86rem; color: var(--ink-soft); margin-top: 2px; }
   a.tool .arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); font-size: 1.2rem; }
   a.tool:hover .arrow { color: var(--ink); }
-
   a.tool.planner { border-color: rgba(255,180,92,0.4); background: linear-gradient(180deg, rgba(255,180,92,0.09), var(--glass) 70%); }
   a.tool.planner .tag { background: rgba(255,180,92,0.15); color: var(--amber); border: 1px solid rgba(255,180,92,0.4); }
   a.tool.check .tag { background: rgba(47,228,167,0.12); color: var(--green); border: 1px solid rgba(47,228,167,0.35); }
@@ -58,31 +57,79 @@
   a.tool.radar .tag { background: rgba(125,150,255,0.12); color: var(--blue); border: 1px solid rgba(125,150,255,0.4); }
   a.tool.radar:hover { border-color: rgba(125,150,255,0.45); }
 
+  .row { display: flex; gap: 12px; }
+  .row a.tool { flex: 1; }
+
+  /* ---------- quiz ---------- */
+  .quiz {
+    background: var(--glass); border: 1px solid var(--line); border-radius: 18px;
+    padding: 22px 20px; margin: 22px 0; text-align: left; position: relative; overflow: hidden;
+  }
+  .quiz::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #1a1a1a 0 33%, var(--de-red) 33% 66%, var(--de-gold) 66% 100%);
+  }
+  .quiz .q-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .quiz .q-map { flex: 0 0 40px; }
+  .quiz .q-map svg { width: 40px; height: 46px; display: block; }
+  .quiz h2 { font-size: 1.1rem; letter-spacing: -0.01em; }
+  .quiz .q-sub { font-size: 0.82rem; color: var(--ink-faint); }
+
+  .quiz .progress { font-size: 0.72rem; color: var(--ink-faint); letter-spacing: 0.05em; text-transform: uppercase; margin: 16px 0 8px; }
+  .quiz .question { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .quiz .opt {
+    display: block; width: 100%; text-align: left; font-family: inherit; font-size: 0.92rem;
+    color: var(--ink); background: var(--glass-strong); border: 1px solid var(--line);
+    border-radius: 11px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all .15s ease;
+  }
+  .quiz .opt:hover:not(:disabled) { border-color: rgba(255,206,77,0.5); }
+  .quiz .opt:disabled { cursor: default; }
+  .quiz .opt.correct { border-color: var(--green); background: rgba(47,228,167,0.12); color: var(--green); font-weight: 600; }
+  .quiz .opt.wrong { border-color: var(--de-red); background: rgba(255,91,91,0.12); color: var(--de-red); }
+  .quiz .explain {
+    display: none; font-size: 0.86rem; color: var(--ink-soft); background: var(--glass-strong);
+    border-left: 3px solid var(--de-gold); border-radius: 8px; padding: 10px 14px; margin: 4px 0 12px;
+  }
+  .quiz .explain b { color: var(--ink); }
+  .quiz .q-next {
+    display: none; font-family: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer;
+    color: #06140f; background: linear-gradient(135deg, #ffd97a, #ffbe3d); border: none;
+    border-radius: 11px; padding: 11px 22px;
+  }
+  .quiz .result { text-align: center; padding: 10px 0; }
+  .quiz .result .score { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; color: var(--de-gold); }
+  .quiz .result .verdict { font-size: 1rem; font-weight: 600; margin: 4px 0 10px; }
+  .quiz .result p { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 14px; }
+  .quiz .result .again { font-family: inherit; font-weight: 600; font-size: 0.86rem; cursor: pointer; color: var(--ink-soft); background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 9px 18px; }
+  .quiz .disclaimer { font-size: 0.72rem; color: var(--ink-faint); margin-top: 14px; }
+
   .socials { margin-top: 24px; font-size: 0.88rem; color: var(--ink-faint); }
   .socials a { color: var(--ink-soft); text-decoration: none; font-weight: 600; margin: 0 8px; }
   .socials a:hover { color: var(--ink); }
   footer { margin-top: 22px; font-size: 0.76rem; color: var(--ink-faint); }
   footer a { color: var(--ink-faint); }
+
+  @media (prefers-reduced-motion: reduce) { a.tool { transition: none; } }
 </style>
 </head>
 <body>
 
-<div class="card-stack">
+<div class="wrap">
   <img class="avatar" src="robert.jpg" alt="Robert Alibegovic">
   <h1>Robert Personal Finance</h1>
   <p class="bio"><b>Chartered Accountant (ACCA)</b> · 13+ years in finance across Germany, New Zealand &amp; the Gulf. Free tools for English speakers investing in Germany &amp; the EU.</p>
+
+  <a class="tool" style="border-color: rgba(180,132,255,0.45); background: linear-gradient(180deg, rgba(180,132,255,0.11), var(--glass) 70%);" href="germany-money-map.html">
+    <span class="tag" style="background: rgba(180,132,255,0.14); color: #c9a8ff; border: 1px solid rgba(180,132,255,0.4);">Start here</span>
+    <h2>Germany Money Map</h2>
+    <p>A two-minute quiz for English speakers: get your personalised first-money-steps checklist for Germany.</p>
+    <span class="arrow">→</span>
+  </a>
 
   <a class="tool planner" href="budget-planner.html">
     <span class="tag">Free download</span>
     <h2>Robert's Budget Planner</h2>
     <p>The NEEDS / WANTS / KEEP spreadsheet I use myself — savings rate, 50/30/20 check, emergency-fund runway.</p>
-    <span class="arrow">→</span>
-  </a>
-
-  <a class="tool" style="border-color: rgba(180,132,255,0.45); background: linear-gradient(180deg, rgba(180,132,255,0.11), var(--glass) 70%);" href="germany-money-map/">
-    <span class="tag" style="background: rgba(180,132,255,0.14); color: #c9a8ff; border: 1px solid rgba(180,132,255,0.4);">Start here</span>
-    <h2>Germany Money Map</h2>
-    <p>A two-minute quiz for English speakers: get your personalised first-money-steps checklist for Germany.</p>
     <span class="arrow">→</span>
   </a>
 
@@ -100,18 +147,51 @@
     <span class="arrow">→</span>
   </a>
 
-  <div style="display: flex; gap: 12px;">
-    <a class="tool" style="flex: 1; border-color: rgba(77,208,225,0.35);" href="retirement-calculator.html">
+  <div class="row">
+    <a class="tool" style="border-color: rgba(77,208,225,0.35);" href="retirement-calculator.html">
       <span class="tag" style="background: rgba(77,208,225,0.12); color: #4dd0e1; border: 1px solid rgba(77,208,225,0.4);">Calculator</span>
       <h2 style="font-size: 0.95rem;">Retirement (€)</h2>
       <p>What your savings plan really builds — in today's money.</p>
     </a>
-    <a class="tool" style="flex: 1; border-color: rgba(255,157,108,0.35);" href="emergency-fund-calculator.html">
+    <a class="tool" style="border-color: rgba(255,157,108,0.35);" href="emergency-fund-calculator.html">
       <span class="tag" style="background: rgba(255,157,108,0.12); color: #ff9d6c; border: 1px solid rgba(255,157,108,0.4);">Calculator</span>
       <h2 style="font-size: 0.95rem;">Emergency fund</h2>
       <p>How many months could you survive? Know your runway.</p>
     </a>
   </div>
+
+  <!-- ---------------- German finance & tax quiz ---------------- -->
+  <section class="quiz" id="quiz" aria-label="German finance and tax quiz">
+    <div class="q-head">
+      <div class="q-map" aria-hidden="true">
+        <svg viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M46 4 54 10 62 8 66 16 60 22 68 26 66 34 76 34 82 44 78 52 88 58 84 66 92 74 82 82 86 92 74 96 70 108 60 112 52 104 44 110 36 102 40 92 30 92 26 84 16 86 12 76 20 70 12 62 18 54 10 48 20 42 16 32 26 30 24 20 34 18 32 8 42 10 46 4Z"
+            fill="rgba(255,206,77,0.14)" stroke="var(--de-gold)" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Deutschland Finance &amp; Tax Quiz</h2>
+        <div class="q-sub">6 questions · how well do you know the German rules?</div>
+      </div>
+    </div>
+
+    <div id="q-body">
+      <div class="progress" id="q-progress"></div>
+      <div class="question" id="q-question"></div>
+      <div id="q-options"></div>
+      <div class="explain" id="q-explain"></div>
+      <button class="q-next" id="q-next" type="button">Next question →</button>
+    </div>
+
+    <div class="result" id="q-result" style="display:none;">
+      <div class="score" id="q-score"></div>
+      <div class="verdict" id="q-verdict"></div>
+      <p id="q-message"></p>
+      <button class="again" id="q-again" type="button">Try again</button>
+    </div>
+
+    <p class="disclaimer">General education, not tax advice. Figures reflect the 2025 rules and can change.</p>
+  </section>
 
   <div class="socials">
     <a href="https://www.tiktok.com/@robertpersonalfinance" target="_blank" rel="noopener">TikTok</a> ·
@@ -123,8 +203,114 @@
   <footer>© 2026 Robert Personal Finance · <a href="legal.html#imprint">Imprint</a> · <a href="legal.html#privacy">Privacy</a> · No investment advice — education only.</footer>
 </div>
 
+<script>
+  const QUESTIONS = [
+    {
+      q: "How much investment income per person is tax‑free each year (Sparer‑Pauschbetrag)?",
+      options: ["€801", "€1,000", "€1,500", "€2,000"],
+      answer: 1,
+      explain: "The <b>Sparer‑Pauschbetrag</b> rose from €801 to <b>€1,000</b> per person in 2023 (€2,000 for jointly assessed couples). Set up a Freistellungsauftrag so your broker applies it automatically."
+    },
+    {
+      q: "What is the flat tax rate on capital gains (Abgeltungsteuer)?",
+      options: ["15 %", "25 %", "30 %", "42 %"],
+      answer: 1,
+      explain: "A flat <b>25 %</b> — plus 5.5 % Solidaritätszuschlag on that, and church tax if applicable, so the effective rate is about <b>26.4 %</b>."
+    },
+    {
+      q: "For a private equity‑ETF, how much of your gains are tax‑exempt (Teilfreistellung)?",
+      options: ["0 %", "15 %", "30 %", "50 %"],
+      answer: 2,
+      explain: "Equity funds (min. 51 % stocks) get a <b>30 % Teilfreistellung</b> in a private account — a chunk of the gain is simply not taxed, to offset fund‑level taxes."
+    },
+    {
+      q: "The Vorabpauschale (advance lump‑sum tax) mainly applies to…",
+      options: ["Individual dividend stocks", "Accumulating ETFs", "Savings accounts", "Rental income"],
+      answer: 1,
+      explain: "It targets <b>accumulating (thesaurierende) funds</b> that don't pay out. Because there's no distribution to tax, the state levies a small advance based on the Basiszins — credited later when you sell."
+    },
+    {
+      q: "How long must you hold crypto privately to sell it tax‑free (§23 EStG)?",
+      options: ["1 year", "3 years", "10 years", "Always taxed"],
+      answer: 0,
+      explain: "Private crypto held over <b>1 year</b> is tax‑free on sale — unlike stocks/ETFs, which are always subject to Abgeltungsteuer. Under a year, gains are taxed at your personal income‑tax rate."
+    },
+    {
+      q: "How long is the speculation period to sell a rental property tax‑free?",
+      options: ["1 year", "5 years", "10 years", "Never tax‑free"],
+      answer: 2,
+      explain: "Real estate has a <b>10‑year</b> Spekulationsfrist for private sales. (A home you've lived in yourself can be exempt sooner.) It's the mirror image of the 1‑year rule for crypto."
+    }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  let idx = 0, score = 0, answered = false;
+
+  function renderQuestion() {
+    answered = false;
+    const item = QUESTIONS[idx];
+    $('q-progress').textContent = 'Question ' + (idx + 1) + ' of ' + QUESTIONS.length + ' · Score ' + score;
+    $('q-question').textContent = item.q;
+    $('q-explain').style.display = 'none';
+    $('q-next').style.display = 'none';
+    $('q-next').textContent = idx === QUESTIONS.length - 1 ? 'See my score →' : 'Next question →';
+    const box = $('q-options');
+    box.innerHTML = '';
+    item.options.forEach((opt, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt';
+      b.textContent = opt;
+      b.addEventListener('click', () => choose(i, b));
+      box.appendChild(b);
+    });
+  }
+
+  function choose(i, btn) {
+    if (answered) return;
+    answered = true;
+    const item = QUESTIONS[idx];
+    const buttons = $('q-options').querySelectorAll('.opt');
+    buttons.forEach((b, j) => {
+      b.disabled = true;
+      if (j === item.answer) b.classList.add('correct');
+      else if (j === i) b.classList.add('wrong');
+    });
+    if (i === item.answer) score++;
+    $('q-explain').innerHTML = item.explain;
+    $('q-explain').style.display = 'block';
+    $('q-next').style.display = 'inline-block';
+  }
+
+  $('q-next').addEventListener('click', () => {
+    idx++;
+    if (idx < QUESTIONS.length) renderQuestion();
+    else showResult();
+  });
+
+  function showResult() {
+    $('q-body').style.display = 'none';
+    $('q-result').style.display = 'block';
+    $('q-score').textContent = score + ' / ' + QUESTIONS.length;
+    let verdict, msg;
+    if (score === QUESTIONS.length) { verdict = 'Steuerprofi! 🇩🇪'; msg = "Full marks — you know the German rules better than most. Share your score and challenge a friend."; }
+    else if (score >= 4) { verdict = 'Strong.'; msg = "Solid grasp of the German system. The gaps are exactly what trips up most expat investors — worth a closer look."; }
+    else if (score >= 2) { verdict = 'Getting there.'; msg = "The German rules are genuinely confusing when you arrive. That's why I make these — grab the free budget planner to start."; }
+    else { verdict = 'New to the system?'; msg = "No shame — nobody's born knowing the Vorabpauschale. Start with the free tools above and it clicks fast."; }
+    $('q-verdict').textContent = verdict;
+    $('q-message').textContent = msg;
+  }
+
+  $('q-again').addEventListener('click', () => {
+    idx = 0; score = 0;
+    $('q-result').style.display = 'none';
+    $('q-body').style.display = 'block';
+    renderQuestion();
+  });
+
+  renderQuestion();
+</script>
 <script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
-
