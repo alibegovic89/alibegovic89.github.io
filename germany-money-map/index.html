@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Germany Money Map — your first financial steps in Germany</title>
+<meta name="description" content="Take a two-minute quiz and get a practical first-money-steps checklist for life in Germany.">
+<meta property="og:title" content="Germany Money Map — your first financial steps in Germany">
+<meta property="og:description" content="A calm, two-minute money setup quiz for English speakers in Germany.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alibegovic89.github.io/germany-money-map/">
+<link rel="icon" type="image/png" href="../favicon.png">
+<style>
+  :root { --bg:#0a0e12; --surface:rgba(238,242,246,.05); --ink:#eef2f6; --soft:#a8b4c0; --faint:#657383; --line:rgba(238,242,246,.12); --violet:#c9a8ff; --violet-dark:#9e72ea; --green:#46e1ad; --amber:#ffbc6d; --danger:#ff907c; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 50% -20%,rgba(158,114,234,.18),transparent 42%),var(--bg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.55; }
+  a { color:inherit; }
+  .wrap { width:min(100% - 32px,720px); margin:0 auto; padding:28px 0 52px; }
+  .nav { display:flex; justify-content:space-between; align-items:center; color:var(--soft); font-size:.88rem; margin-bottom:44px; }
+  .brand { color:var(--ink); text-decoration:none; font-weight:750; }
+  .back { color:var(--soft); text-decoration:none; } .back:hover { color:var(--ink); }
+  .eyebrow { color:var(--violet); font-size:.76rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }
+  h1 { font-size:clamp(2.15rem,8vw,4rem); line-height:1.04; letter-spacing:-.055em; max-width:680px; margin:12px 0 18px; }
+  .intro { max-width:600px; color:var(--soft); font-size:1.08rem; margin-bottom:32px; }
+  .trust { display:flex; flex-wrap:wrap; gap:9px; color:var(--soft); font-size:.84rem; margin-bottom:34px; }
+  .trust span { border:1px solid var(--line); border-radius:999px; padding:6px 10px; background:var(--surface); }
+  .panel { background:rgba(14,20,27,.83); border:1px solid var(--line); border-radius:22px; padding:clamp(22px,5vw,38px); box-shadow:0 24px 80px rgba(0,0,0,.25); }
+  .progress-row { display:flex; justify-content:space-between; align-items:center; color:var(--soft); font-size:.84rem; margin-bottom:12px; }
+  .progress { height:6px; background:rgba(238,242,246,.1); border-radius:99px; margin-bottom:32px; overflow:hidden; }
+  .progress i { display:block; height:100%; width:16.666%; background:linear-gradient(90deg,var(--violet-dark),var(--violet)); transition:width .24s ease; }
+  .question { font-size:clamp(1.38rem,4.5vw,1.85rem); line-height:1.18; letter-spacing:-.035em; margin:0 0 10px; }
+  .hint { color:var(--soft); margin:0 0 24px; }
+  .options { display:grid; gap:10px; }
+  button { font:inherit; }
+  .option { width:100%; color:var(--ink); background:var(--surface); border:1px solid var(--line); text-align:left; padding:16px 17px; border-radius:13px; cursor:pointer; transition:.15s ease; }
+  .option:hover,.option:focus-visible { border-color:var(--violet); background:rgba(201,168,255,.11); transform:translateY(-1px); outline:none; }
+  .option strong { display:block; font-size:1rem; } .option small { color:var(--soft); display:block; margin-top:2px; }
+  .step { display:none; } .step.active { display:block; animation:in .23s ease; } @keyframes in { from { opacity:0; transform:translateX(8px); } to { opacity:1; transform:none; } }
+  .result { display:none; } .result.active { display:block; animation:in .3s ease; }
+  .result h2 { font-size:clamp(1.65rem,5vw,2.35rem); letter-spacing:-.045em; line-height:1.1; margin:10px 0; }
+  .result-lead { color:var(--soft); font-size:1.04rem; margin:0 0 25px; }
+  .checklist { list-style:none; padding:0; margin:0 0 25px; display:grid; gap:10px; }
+  .checklist li { display:flex; gap:11px; padding:13px 14px; background:var(--surface); border:1px solid var(--line); border-radius:12px; }
+  .checklist b { color:var(--green); } .checklist span { color:var(--soft); }
+  .recommendation { border:1px solid rgba(201,168,255,.4); background:rgba(201,168,255,.09); padding:17px; border-radius:13px; margin-bottom:25px; }
+  .recommendation .label { color:var(--violet); font-size:.74rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+  .recommendation h3 { margin:5px 0 2px; font-size:1.08rem; } .recommendation p { color:var(--soft); margin:0; font-size:.92rem; }
+  .email-box { border-top:1px solid var(--line); padding-top:24px; }
+  .email-box h3 { margin:0 0 4px; font-size:1.1rem; } .email-box p { color:var(--soft); font-size:.9rem; margin:0 0 13px; }
+  form { display:flex; gap:8px; } input { min-width:0; flex:1; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); padding:12px; font:inherit; } input:focus { outline:2px solid var(--violet); outline-offset:1px; }
+  .primary { border:0; border-radius:10px; background:var(--violet); color:#1b122b; padding:12px 15px; font-weight:800; cursor:pointer; white-space:nowrap; } .primary:hover { background:#d8c0ff; }
+  .form-note { color:var(--faint); font-size:.76rem; margin:9px 0 0; } .form-message { min-height:1.4em; margin:8px 0 0; font-size:.84rem; color:var(--soft); } .form-message.error { color:var(--danger); } .form-message.success { color:var(--green); }
+  .secondary { display:inline-block; text-decoration:none; margin-top:20px; color:var(--ink); border-bottom:1px solid var(--violet); font-weight:700; }
+  .restart { background:none; color:var(--soft); border:0; padding:14px 0 0; cursor:pointer; text-decoration:underline; }
+  .legal { color:var(--faint); font-size:.77rem; text-align:center; margin:32px auto 0; max-width:610px; }
+  @media (max-width:520px) { .wrap { width:min(100% - 24px,720px); } .nav { margin-bottom:34px; } .panel { border-radius:17px; } form { display:block; } .primary { width:100%; margin-top:8px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <nav class="nav"><a class="brand" href="../">Robert Personal Finance</a><a class="back" href="../">← All free tools</a></nav>
+  <div id="quiz-intro">
+    <div class="eyebrow">Free · 2 minutes</div>
+    <h1>Your calm starting point for money in Germany.</h1>
+    <p class="intro">New here, starting a job, or just unsure what comes first? Answer six quick questions and get a practical personal checklist—not generic finance noise.</p>
+    <div class="trust"><span>For English speakers in Germany</span><span>No broker login</span><span>Educational, not financial advice</span></div>
+  </div>
+
+  <section class="panel" aria-live="polite">
+    <div id="quiz">
+      <div class="progress-row"><span id="step-label">Question 1 of 6</span><span id="progress-percent">17%</span></div>
+      <div class="progress"><i id="progress-bar"></i></div>
+
+      <div class="step active" data-key="status">
+        <h2 class="question">Where are you in your Germany chapter?</h2><p class="hint">This helps us keep your first steps realistic.</p>
+        <div class="options"><button class="option" data-value="new"><strong>I’m new to Germany or moving soon</strong><small>Getting the foundations in place</small></button><button class="option" data-value="employed"><strong>I’m employed here already</strong><small>My income is working, but my system isn’t</small></button><button class="option" data-value="settled"><strong>I’m settled and ready to optimise</strong><small>I want a clearer long-term plan</small></button></div>
+      </div>
+      <div class="step" data-key="insurance">
+        <h2 class="question">Do you understand your health insurance setup?</h2><p class="hint">It is one of the biggest monthly decisions in Germany.</p>
+        <div class="options"><button class="option" data-value="unsure"><strong>Not really</strong><small>I’m still choosing or I don’t know what I have</small></button><button class="option" data-value="public"><strong>Yes — public insurance</strong><small>I understand the basics of my cover and contributions</small></button><button class="option" data-value="private"><strong>Yes — private insurance</strong><small>I know why I chose it and what it means long term</small></button></div>
+      </div>
+      <div class="step" data-key="buffer">
+        <h2 class="question">How much of a cash buffer do you have?</h2><p class="hint">Use your essential monthly costs, not your full lifestyle spend.</p>
+        <div class="options"><button class="option" data-value="none"><strong>Less than one month</strong><small>There’s no real emergency buffer yet</small></button><button class="option" data-value="some"><strong>One to three months</strong><small>I have some runway, but it is still growing</small></button><button class="option" data-value="solid"><strong>More than three months</strong><small>My short-term safety net is in place</small></button></div>
+      </div>
+      <div class="step" data-key="pension">
+        <h2 class="question">Have you looked beyond the state pension?</h2><p class="hint">This is about understanding your gaps—not buying a product today.</p>
+        <div class="options"><button class="option" data-value="no"><strong>Not yet</strong><small>I know it matters but have not started</small></button><button class="option" data-value="work"><strong>Only through work</strong><small>I have a workplace arrangement, but no clear picture</small></button><button class="option" data-value="yes"><strong>Yes, I have a plan</strong><small>I understand my pension picture and next actions</small></button></div>
+      </div>
+      <div class="step" data-key="broker">
+        <h2 class="question">Where are you with investing?</h2><p class="hint">There is no prize for moving faster than your foundations.</p>
+        <div class="options"><button class="option" data-value="none"><strong>No broker yet</strong><small>I’m not investing in Germany yet</small></button><button class="option" data-value="starting"><strong>I have a broker or Sparplan</strong><small>I’m starting, but would like more confidence</small></button><button class="option" data-value="invested"><strong>I already invest regularly</strong><small>I want to check that my portfolio is working as intended</small></button></div>
+      </div>
+      <div class="step" data-key="tax">
+        <h2 class="question">How clear is your tax residency situation?</h2><p class="hint">Especially important if you moved countries, have overseas income, or plan to leave again.</p>
+        <div class="options"><button class="option" data-value="unsure"><strong>I’m not fully sure</strong><small>It feels more complicated than a normal payslip</small></button><button class="option" data-value="simple"><strong>Simple and clear</strong><small>German resident, salary income, no complications I know of</small></button><button class="option" data-value="complex"><strong>Cross-border or more complex</strong><small>Overseas assets/income, dual residency, or a planned move</small></button></div>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="eyebrow">Your Germany Money Map</div>
+      <h2 id="result-title"></h2><p class="result-lead" id="result-lead"></p>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="recommendation"><div class="label">Your best next tool</div><h3 id="tool-title"></h3><p id="tool-copy"></p></div>
+      <div class="email-box">
+        <h3>Keep the practical next steps coming</h3><p>Get occasional Germany-money notes built for English speakers. Your checklist stays right here.</p>
+        <form id="email-form"><input type="hidden" name="product" value="germany-money-map"><input type="hidden" id="map-result" name="money_map_result"><input type="email" name="email" placeholder="you@email.com" required aria-label="Email address"><button class="primary" type="submit">Keep me posted</button></form>
+        <p class="form-message" id="form-message"></p><p class="form-note">Your email is never sold or shared. You can unsubscribe from updates anytime.</p>
+      </div>
+      <a class="secondary" id="tool-link" href="../budget-planner/">Open my recommended tool →</a><br><button class="restart" id="restart" type="button">Start the quiz again</button>
+    </div>
+  </section>
+  <p class="legal">This tool is general education, not tax, legal, insurance, or investment advice. For a personal decision, use an appropriately qualified professional.</p>
+</main>
+<script>
+  const answers = {}; const steps = [...document.querySelectorAll('.step')]; let current = 0;
+  const progressBar = document.getElementById('progress-bar'); const stepLabel = document.getElementById('step-label'); const progressPercent = document.getElementById('progress-percent');
+  function setProgress() { const percent = Math.round(((current + 1) / steps.length) * 100); progressBar.style.width = percent + '%'; stepLabel.textContent = `Question ${current + 1} of ${steps.length}`; progressPercent.textContent = percent + '%'; }
+  function showStep(next) { steps[current].classList.remove('active'); current = next; steps[current].classList.add('active'); setProgress(); }
+  document.querySelectorAll('.option').forEach(button => button.addEventListener('click', () => { answers[button.closest('.step').dataset.key] = button.dataset.value; current < steps.length - 1 ? showStep(current + 1) : showResult(); }));
+  function showResult() {
+    document.getElementById('quiz').style.display = 'none'; document.getElementById('result').classList.add('active');
+    const early = answers.status === 'new' || answers.insurance === 'unsure'; const buffer = answers.buffer !== 'solid'; const tax = answers.tax !== 'simple'; const investor = answers.broker === 'invested';
+    const title = early ? 'Build the foundations first.' : buffer ? 'Your next win is financial breathing room.' : investor ? 'Your foundation is in place. Now simplify.' : 'You’re ready to make your plan clearer.';
+    const lead = early ? 'Germany has a lot of moving pieces. Focus on the basics in the right order, and investing gets much less intimidating.' : buffer ? 'Before you optimise returns, protect your month-to-month position. A little structure buys a lot of calm.' : investor ? 'You have momentum. The useful next question is whether your money is aligned, rather than whether you can add more.' : 'You do not need to solve every money question at once. These are the highest-value next steps for your situation.';
+    const items = [];
+    if (answers.insurance === 'unsure') items.push(['1', 'Confirm your health-insurance status and contribution.', 'Know whether you are public or private and what changes if your income or family situation changes.']);
+    if (buffer) items.push([items.length + 1, 'Create a separate emergency-fund target.', 'Start with one month of essential costs; build toward three to six months as your situation allows.']);
+    if (answers.pension !== 'yes') items.push([items.length + 1, 'Understand your pension picture.', 'Collect your state-pension record and workplace benefits before deciding what gap you need to cover.']);
+    if (answers.broker === 'none') items.push([items.length + 1, 'Learn the broker and tax basics before opening an account.', 'A simple plan is better than a rushed choice based on a social-media recommendation.']);
+    if (tax) items.push([items.length + 1, 'Write down your tax-residency questions.', 'For cross-border income, assets, or a move, get advice before assuming a German rule applies cleanly.']);
+    if (!items.length) items.push(['1', 'Review your system once a year.', 'Keep your emergency fund, pension picture, broker costs, and tax situation visible as life changes.']);
+    document.getElementById('result-title').textContent = title; document.getElementById('result-lead').textContent = lead;
+    document.getElementById('checklist').innerHTML = items.slice(0, 4).map(([n, h, p]) => `<li><b>${n}</b><span><strong>${h}</strong><br>${p}</span></li>`).join('');
+    const toolTitle = buffer ? "Robert's Budget Planner" : investor ? 'Depot-Check' : "Robert's Budget Planner";
+    const toolCopy = buffer ? 'Use the planner to see your essential costs, savings rate, and a realistic emergency-fund target.' : investor ? 'See the overlap, fee drag, and concentration hidden inside a simple example portfolio.' : 'Start with a clear view of income, essential costs, and the money you can keep for your future.';
+    const href = investor ? '../depot-check/' : '../budget-planner/'; document.getElementById('tool-title').textContent = toolTitle; document.getElementById('tool-copy').textContent = toolCopy; document.getElementById('tool-link').href = href;
+    document.getElementById('map-result').value = title;
+  }
+  document.getElementById('restart').addEventListener('click', () => { Object.keys(answers).forEach(k => delete answers[k]); current = 0; document.getElementById('result').classList.remove('active'); document.getElementById('quiz').style.display = ''; steps.forEach((step, i) => step.classList.toggle('active', i === 0)); setProgress(); window.scrollTo({top: 0, behavior: 'smooth'}); });
+  document.getElementById('email-form').addEventListener('submit', async event => { event.preventDefault(); const form = event.currentTarget; const message = document.getElementById('form-message'); const submit = form.querySelector('button'); submit.disabled = true; submit.textContent = 'Sending…'; message.className = 'form-message'; message.textContent = ''; try { const response = await fetch('https://formspree.io/f/xvzepjkq', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } }); if (!response.ok) throw new Error('Form service rejected the submission'); form.style.display = 'none'; message.classList.add('success'); message.textContent = 'You’re in — keep your checklist above for your next steps.'; } catch (error) { message.classList.add('error'); message.textContent = 'We could not save your email just now. Please try again in a moment.'; submit.disabled = false; submit.textContent = 'Keep me posted'; } });
+  setProgress();
+</script>
+<script data-goatcounter="https://robertpersonalfinance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
